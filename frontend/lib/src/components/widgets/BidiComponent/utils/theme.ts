@@ -42,7 +42,29 @@ export const objectToCssCustomProperties = (
       return
     }
 
-    result[propertyName] = String(value)
+    if (value === undefined || value === null) {
+      // Use CSS-wide keyword `unset` so that any property consuming this
+      // variable reverts to its initial/inherited value instead of getting the
+      // literal strings "undefined" or "null".
+      result[propertyName] = "unset"
+      return
+    }
+
+    if (Array.isArray(value)) {
+      result[propertyName] = value.join(",")
+      return
+    }
+
+    if (typeof value === "number" || typeof value === "string") {
+      result[propertyName] = String(value)
+      return
+    }
+
+    // Fallback for unexpected value types; use `unset` rather than relying on
+    // Object's default stringification ('[object Object]').
+    // This is a defensive fallback to avoid unexpected behavior. We don't
+    // expect this to be reached in practice.
+    result[propertyName] = "unset"
   })
 
   return result as StreamlitThemeCssProperties
@@ -105,7 +127,9 @@ export const extractComponentsV2Theme = (
     borderColorLight: theme.colors.borderColorLight,
     codeTextColor: theme.colors.codeTextColor,
 
-    widgetBorderColor: theme.colors.widgetBorderColor,
+    // Computed property that falls back to transparent if widgetBorderColor
+    // (the config option) is not set.
+    widgetBorderColor: theme.colors.widgetBorderColor || "transparent",
 
     redColor: theme.colors.redColor,
     orangeColor: theme.colors.orangeColor,
