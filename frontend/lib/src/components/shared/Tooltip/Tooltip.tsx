@@ -138,6 +138,31 @@ function Tooltip({
     setIsOpen(false)
   }, [])
 
+  const handleKeyDownCapture = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key !== "Escape" || !isOpen) {
+        return
+      }
+
+      // BaseWeb tooltips don't consistently dismiss on Escape across trigger
+      // types. If the tooltip is focus-triggered, blurring the active element
+      // will reliably close it.
+      //
+      // Only blur if the active element is inside this tooltip's wrapper to
+      // avoid unintended focus loss for unrelated controls.
+      const wrapper = event.currentTarget
+      const activeElement = wrapper.ownerDocument?.activeElement
+
+      if (
+        activeElement instanceof HTMLElement &&
+        wrapper.contains(activeElement)
+      ) {
+        activeElement.blur()
+      }
+    },
+    [isOpen]
+  )
+
   useTooltipMeasurementSideEffect(tooltipElement, isOpen)
 
   const tooltipOverrides = generateDefaultTooltipOverrides(theme, overrides)
@@ -173,6 +198,7 @@ function Tooltip({
           width: containerWidth ? "100%" : "auto",
           ...style,
         }}
+        onKeyDownCapture={handleKeyDownCapture}
         data-testid={
           error ? "stTooltipErrorHoverTarget" : "stTooltipHoverTarget"
         }

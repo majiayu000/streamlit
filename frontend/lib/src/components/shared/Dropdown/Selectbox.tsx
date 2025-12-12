@@ -31,7 +31,9 @@ import IsSidebarContext from "~lib/components/core/IsSidebarContext"
 import { getBorderColor } from "~lib/components/shared/Base/styled-components"
 import VirtualDropdown from "~lib/components/shared/Dropdown/VirtualDropdown"
 import { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
+import TooltipIcon, {
+  getHelpTooltipAriaLabel,
+} from "~lib/components/shared/TooltipIcon"
 import {
   StyledWidgetLabelHelp,
   WidgetLabel,
@@ -142,7 +144,11 @@ const Selectbox: FC<Props> = ({
       >
         {help && (
           <StyledWidgetLabelHelp>
-            <TooltipIcon content={help} placement={Placement.TOP_RIGHT} />
+            <TooltipIcon
+              content={help}
+              placement={Placement.TOP_RIGHT}
+              ariaLabel={getHelpTooltipAriaLabel(label)}
+            />
           </StyledWidgetLabelHelp>
         )}
       </WidgetLabel>

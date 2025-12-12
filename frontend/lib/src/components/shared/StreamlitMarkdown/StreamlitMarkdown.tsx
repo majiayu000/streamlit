@@ -254,9 +254,13 @@ const HeaderActionElements: FC<HeadingActionElements> = ({
     <StyledHeadingActionElements data-testid="stHeaderActionElements">
       {help && <InlineTooltipIcon content={help} />}
       {elementId && !hideAnchor && (
-        <StyledLinkIcon href={`#${elementId}`}>
+        <StyledLinkIcon href={`#${elementId}`} aria-label="Link to heading">
           {/* Convert size to px because using rem works but logs a console error (at least on webkit) */}
-          <LinkIcon size={convertRemToPx(theme.iconSizes.base)} />
+          <LinkIcon
+            size={convertRemToPx(theme.iconSizes.base)}
+            aria-hidden="true"
+            focusable="false"
+          />
         </StyledLinkIcon>
       )}
     </StyledHeadingActionElements>
@@ -309,14 +313,26 @@ export const HeadingWithActionElements: FC<HeadingWithActionElementsProps> = ({
     />
   )
 
-  const attributes = isInSidebarOrDialog ? {} : { ref, id: elementId }
+  // Accessibility:
+  // Headings can contain focusable action elements (help tooltip, anchor link).
+  // If those elements are nested inside the <h*> tag, they can change the
+  // heading's computed accessible name. This breaks E2E tests that locate
+  // headings by name and also creates noisy announcements.
+  //
+  // To keep the heading name stable (the visible heading text only), we use
+  // aria-labelledby to point at a span that wraps just the text content.
+  const headingTextId = elementId ? `${elementId}--heading-text` : undefined
+
+  const attributes = isInSidebarOrDialog
+    ? { "aria-labelledby": headingTextId }
+    : { ref, id: elementId, "aria-labelledby": headingTextId }
   const Tag = tag
   // We nest the action-elements (tooltip, link-icon) into the header element (e.g. h1),
   // so that it appears inline. For context: we also tried setting the h's display attribute to 'inline', but
   // then we would need to add padding to the outer container and fiddle with the vertical alignment.
   const headerElementWithActions = (
     <Tag {...tagProps} {...attributes}>
-      {children}
+      {headingTextId ? <span id={headingTextId}>{children}</span> : children}
       {actionElements}
     </Tag>
   )

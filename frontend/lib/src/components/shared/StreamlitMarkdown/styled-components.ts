@@ -347,6 +347,9 @@ export const StyledLinkIcon = styled.a(({ theme }) => ({
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
+  opacity: 0,
+  pointerEvents: "none",
+  transition: "opacity 150ms ease-in-out",
 
   svg: {
     // same color as the tooltip-icon
@@ -356,6 +359,11 @@ export const StyledLinkIcon = styled.a(({ theme }) => ({
 
   "&:hover svg": {
     stroke: theme.colors.bodyText,
+  },
+
+  "&:focus-visible": {
+    opacity: 1,
+    pointerEvents: "auto",
   },
 }))
 
@@ -370,17 +378,13 @@ export const StyledHeadingWithActionElements = styled.div(({ theme }) => ({
   wordBreak: "break-word",
   textWrap: "pretty",
 
-  // show link-icon when hovering somewhere over the heading
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- TODO: Replace 'any' with a more specific type.
-  [StyledLinkIcon as any]: {
-    visibility: "hidden",
-  },
-
-  // we have to set the hover here so that the link icon becomes visible when hovering anywhere over the heading
-  "&:hover": {
+  // Show link icon when hovering or when focus is within the heading container.
+  // We use opacity instead of visibility so the link remains in the tab order.
+  "&:hover, &:focus-within": {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- TODO: Replace 'any' with a more specific type.
     [StyledLinkIcon as any]: {
-      visibility: "visible",
+      opacity: 1,
+      pointerEvents: "auto",
     },
   },
 }))

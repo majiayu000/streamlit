@@ -40,7 +40,9 @@ import { Slider as SliderProto } from "@streamlit/protobuf"
 import { withCalculatedWidth } from "~lib/components/core/Layout/withCalculatedWidth"
 import StreamlitMarkdown from "~lib/components/shared/StreamlitMarkdown"
 import { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
+import TooltipIcon, {
+  getHelpTooltipAriaLabel,
+} from "~lib/components/shared/TooltipIcon"
 import {
   StyledWidgetLabelHelp,
   WidgetLabel,
@@ -331,6 +333,7 @@ function Slider({
             <TooltipIcon
               content={element.help}
               placement={Placement.TOP_RIGHT}
+              ariaLabel={getHelpTooltipAriaLabel(element.label)}
             />
           </StyledWidgetLabelHelp>
         )}

@@ -57,7 +57,11 @@ export const StyledWidgetInstructions = styled.div(({ theme }) => ({
   right: `calc(${theme.fontSizes.mdLg} * 0.5)`,
 }))
 
-export const StyledWidgetLabelHelpInline = styled.label(({ theme }) => ({
+/**
+ * Please utilize `WidgetLabelHelpIconInline` instead of using this directly in
+ * order to support a11y best practices.
+ */
+export const StyledWidgetLabelHelpInline = styled.span(({ theme }) => ({
   marginLeft: theme.spacing.xs,
   position: "relative",
   display: "flex",

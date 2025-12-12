@@ -37,7 +37,9 @@ import { getBorderColor } from "~lib/components/shared/Base/styled-components"
 import Icon from "~lib/components/shared/Icon"
 import StreamlitMarkdown from "~lib/components/shared/StreamlitMarkdown"
 import Tooltip, { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
+import TooltipIcon, {
+  getHelpTooltipAriaLabel,
+} from "~lib/components/shared/TooltipIcon"
 import {
   StyledWidgetLabelHelp,
   WidgetLabel,
@@ -258,6 +260,7 @@ function DateInput({
             <TooltipIcon
               content={element.help}
               placement={Placement.TOP_RIGHT}
+              ariaLabel={getHelpTooltipAriaLabel(element.label)}
             />
           </StyledWidgetLabelHelp>
         )}

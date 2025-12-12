@@ -25,7 +25,9 @@ import { getBorderColor } from "~lib/components/shared/Base/styled-components"
 import { DynamicIcon, isMaterialIcon } from "~lib/components/shared/Icon"
 import InputInstructions from "~lib/components/shared/InputInstructions/InputInstructions"
 import { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
+import TooltipIcon, {
+  getHelpTooltipAriaLabel,
+} from "~lib/components/shared/TooltipIcon"
 import {
   StyledWidgetLabelHelp,
   WidgetLabel,
@@ -162,6 +164,7 @@ function TextInput({
             <TooltipIcon
               content={element.help}
               placement={Placement.TOP_RIGHT}
+              ariaLabel={getHelpTooltipAriaLabel(element.label)}
             />
           </StyledWidgetLabelHelp>
         )}

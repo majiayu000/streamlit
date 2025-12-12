@@ -32,7 +32,9 @@ import { NumberInput as NumberInputProto } from "@streamlit/protobuf"
 import Icon, { DynamicIcon, isMaterialIcon } from "~lib/components/shared/Icon"
 import InputInstructions from "~lib/components/shared/InputInstructions/InputInstructions"
 import { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
+import TooltipIcon, {
+  getHelpTooltipAriaLabel,
+} from "~lib/components/shared/TooltipIcon"
 import {
   StyledWidgetLabelHelp,
   WidgetLabel,
@@ -378,6 +380,7 @@ const NumberInput: React.FC<Props> = ({
             <TooltipIcon
               content={element.help}
               placement={Placement.TOP_RIGHT}
+              ariaLabel={getHelpTooltipAriaLabel(element.label)}
             />
           </StyledWidgetLabelHelp>
         )}

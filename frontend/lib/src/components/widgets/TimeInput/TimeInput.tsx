@@ -25,7 +25,9 @@ import { TimeInput as TimeInputProto } from "@streamlit/protobuf"
 import IsSidebarContext from "~lib/components/core/IsSidebarContext"
 import { getBorderColor } from "~lib/components/shared/Base/styled-components"
 import { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
+import TooltipIcon, {
+  getHelpTooltipAriaLabel,
+} from "~lib/components/shared/TooltipIcon"
 import {
   StyledWidgetLabelHelp,
   WidgetLabel,
@@ -209,6 +211,7 @@ function TimeInput({
             <TooltipIcon
               content={element.help}
               placement={Placement.TOP_RIGHT}
+              ariaLabel={getHelpTooltipAriaLabel(element.label)}
             />
           </StyledWidgetLabelHelp>
         )}

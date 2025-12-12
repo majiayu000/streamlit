@@ -27,8 +27,7 @@ import { Checkbox as CheckboxProto } from "@streamlit/protobuf"
 
 import StreamlitMarkdown from "~lib/components/shared/StreamlitMarkdown"
 import { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
-import { StyledWidgetLabelHelpInline } from "~lib/components/widgets/BaseWidget"
+import { WidgetLabelHelpIconInline } from "~lib/components/widgets/BaseWidget"
 import {
   useBasicWidgetState,
   ValueWithSource,
@@ -219,12 +218,11 @@ function Checkbox({
             largerLabel
           />
           {element.help && (
-            <StyledWidgetLabelHelpInline color={color}>
-              <TooltipIcon
-                content={element.help}
-                placement={Placement.TOP_RIGHT}
-              />
-            </StyledWidgetLabelHelpInline>
+            <WidgetLabelHelpIconInline
+              content={element.help}
+              placement={Placement.TOP_RIGHT}
+              label={element.label}
+            />
           )}
         </StyledContent>
       </UICheckbox>

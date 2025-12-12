@@ -33,7 +33,9 @@ import { DateTimeInput as DateTimeInputProto } from "@streamlit/protobuf"
 import IsSidebarContext from "~lib/components/core/IsSidebarContext"
 import { LibConfigContext } from "~lib/components/core/LibConfigContext"
 import { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
+import TooltipIcon, {
+  getHelpTooltipAriaLabel,
+} from "~lib/components/shared/TooltipIcon"
 import {
   StyledWidgetLabelHelp,
   WidgetLabel,
@@ -220,6 +222,7 @@ function DateTimeInput({
             <TooltipIcon
               content={element.help}
               placement={Placement.TOP_RIGHT}
+              ariaLabel={getHelpTooltipAriaLabel(element.label)}
             />
           </StyledWidgetLabelHelp>
         )}

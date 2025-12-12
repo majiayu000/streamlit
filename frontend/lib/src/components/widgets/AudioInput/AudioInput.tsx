@@ -30,7 +30,9 @@ import { AudioInput as AudioInputProto } from "@streamlit/protobuf"
 import { useWaveformController } from "~lib/components/audio"
 import Toolbar, { ToolbarAction } from "~lib/components/shared/Toolbar"
 import { Placement } from "~lib/components/shared/Tooltip"
-import TooltipIcon from "~lib/components/shared/TooltipIcon"
+import TooltipIcon, {
+  getHelpTooltipAriaLabel,
+} from "~lib/components/shared/TooltipIcon"
 import { WidgetLabel } from "~lib/components/widgets/BaseWidget"
 import { FormClearHelper } from "~lib/components/widgets/Form"
 import { FileUploadClient } from "~lib/FileUploadClient"
@@ -536,7 +538,11 @@ const AudioInput: React.FC<Props> = ({
       >
         {element.help && (
           <StyledWidgetLabelHelp>
-            <TooltipIcon content={element.help} placement={Placement.TOP} />
+            <TooltipIcon
+              content={element.help}
+              placement={Placement.TOP}
+              ariaLabel={getHelpTooltipAriaLabel(element.label)}
+            />
           </StyledWidgetLabelHelp>
         )}
       </WidgetLabel>
